@@ -33,7 +33,7 @@ router.post("/signup", async(req,res) =>{
 
     const user = await User.create({
         username: req.body.username,
-        firstName: req.body.username,
+        firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: req.body.password
     })
@@ -61,24 +61,25 @@ const signinBody = zod.object({
     password: zod.string()
 })
 
-router.post("/signin", (req,res) =>{
+router.post("/signin", async (req,res) =>{
     const { success } = signinBody.safeParse(req.body);
 
     if(!success){
         res.status(411).json({
             message: "Incorrect inputs"
         })
-    }
+    } 
 
-    const user = User.findOne({
+    const user = await User.findOne({
         username: req.body.username,
         password: req.body.password
     })
 
     if(user){
         const token = jwt.sign({
-            userId : user._id
+            userId: user._id
         }, JWT_SECRET)
+
 
         res.json({
             token : token
@@ -90,8 +91,6 @@ router.post("/signin", (req,res) =>{
         message: "Error while logging in"
     });
 })
-
-module.exports = userRouter;
 
 const updateBody = zod.object({
     firstName : zod.string().optional(),
@@ -139,3 +138,4 @@ router.get("/bulk", async(req,res) =>{
     })
 })
 
+module.exports = router;
