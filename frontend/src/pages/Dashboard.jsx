@@ -1,11 +1,13 @@
 import { Appbar } from "../components/Appbar"
 import { Balance } from "../components/Balance"
-import { User } from "../components/User"
+import { Users } from "../components/Users"
 
 export const Dashboard = () =>{
     return <div>
         <Appbar />
-        <Balance value={"10000"} />
-        <User />
+        <div className="m-8">
+            <Balance value={"10,000"} />
+            <Users />
+        </div>
     </div>
 }
