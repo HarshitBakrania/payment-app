@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export const SendMoney = () => {
     const [searchParams] = useSearchParams();
@@ -28,6 +29,16 @@ export const SendMoney = () => {
             setMessage(error.response?.data?.message || "An error occurred");
         }
     };
+
+    useEffect(() => {
+        if (message) {
+          const timer = setTimeout(() => {
+            setMessage('');
+          }, 2000); 
+    
+          return () => clearTimeout(timer);
+        }
+      }, [message]);
     
 
     return <div class="flex justify-center h-screen bg-gray-100">
