@@ -5,8 +5,30 @@ import { useState } from "react";
 export const SendMoney = () => {
     const [searchParams] = useSearchParams();
     const [amount, setAmount] = useState(0)
+    const [message, setMessage] = useState("");
     const id = searchParams.get("id");
     const name = searchParams.get("name");
+
+    const handleTransfer = async () =>{
+        try{
+            const response = await axios.post("http://localhost:3000/api/v1/account/transfer",{
+                to: id,
+                amount
+            },{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+
+            if(response.status === 200){
+                setMessage(response.data.message)
+            }
+        }
+        catch(error){
+            setMessage(error.response?.data?.message || "An error occurred");
+        }
+    };
+    
 
     return <div class="flex justify-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
@@ -40,18 +62,10 @@ export const SendMoney = () => {
                         placeholder="Enter amount"
                     />
                     </div>
-                    <button onClick={() =>{
-                        axios.post("http://localhost:3000/api/v1/account/transfer",{
-                            to: id,
-                            amount
-                        },{
-                            headers: {
-                                Authorization: `Bearer ${localStorage.getItem("token")}`
-                            }
-                        })
-                    }} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
+                    <button onClick={handleTransfer} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
                         Initiate Transfer
                     </button>
+                    {message && <p className="mt-4 text-center text-lg">{message}</p>}
                 </div>
                 </div>
         </div>
