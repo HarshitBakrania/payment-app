@@ -6,11 +6,21 @@ import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../hooks/useUser";
+import { Navigate } from "react-router-dom";
 
 export const Signin = () =>{
     const[username, setUsername] = useState("");
     const[password, setPassowrd] = useState("");
     const navigate = useNavigate();
+
+    const user = useUser();
+    if(user.loading){
+        return "loading..."
+    }
+    if(user.userDetails){
+        return <Navigate to = {"/dashboard"} /> 
+    }
 
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="flex flex-col justify-center">

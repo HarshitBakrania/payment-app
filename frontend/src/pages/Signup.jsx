@@ -6,6 +6,7 @@ import { Heading } from "../components/Heading"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import { useNavigate } from "react-router-dom"
+import { useUser } from "../../hooks/useUser"
 
 export const SignUp = () => {
     const[firstName, setFirstName] = useState("");
@@ -13,6 +14,14 @@ export const SignUp = () => {
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    const user = useUser();
+    if(user.loading){
+        return "loading..."
+    }
+    if(user.userDetails){
+        return <Navigate to = {"/dashboard"} /> 
+    }
 
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="flex flex-col justify-center">
