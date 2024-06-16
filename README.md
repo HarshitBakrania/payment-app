@@ -1,2 +1,3 @@
 
-## A basic version of a **Payment App**
+## A basic version of a Payment App
+Created with **Node.js, Express, React, MongoDB, Tailwind CSS **
