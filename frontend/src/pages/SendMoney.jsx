@@ -65,7 +65,7 @@ export const SendMoney = () => {
                     <button onClick={handleTransfer} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
                         Initiate Transfer
                     </button>
-                    {message && <p className="mt-4 text-center text-lg">{message}</p>}
+                    <div className="mt-4 text-center text-lg">{message}</div>
                 </div>
                 </div>
         </div>
